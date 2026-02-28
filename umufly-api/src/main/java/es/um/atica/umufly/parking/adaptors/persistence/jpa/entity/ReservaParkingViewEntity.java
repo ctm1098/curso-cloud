@@ -28,12 +28,10 @@ public class ReservaParkingViewEntity {
 	@Column( name = "NUMERO_DOCUMENTO_CLIENTE", length = 15, nullable = false )
 	private String numeroDocumentoCliente;
 
-	@NotNull
-	@Column( name = "FECHA_RESERVA", nullable = false )
+	@Column( name = "FECHA_RESERVA" )
 	private LocalDateTime fechaReserva;
 
-	@NotNull
-	@Column( name = "FECHA_MODIFICACION", nullable = false )
+	@Column( name = "FECHA_MODIFICACION" )
 	private LocalDateTime fechaModificacion;
 
 	@NotNull
@@ -47,10 +45,11 @@ public class ReservaParkingViewEntity {
 	@NotNull
 	@Column( name = "ESTADO_RESERVA", length = 2, nullable = false )
 	@Enumerated( value = EnumType.STRING )
-	private EstadoReservaParkingEnum estadoReserva;
+	private EstadoParkingEnum estadoReserva;
 
 	@NotNull
-	@Column( name = "TIPO", nullable = false, length = 1 )
+	@Column( name = "TIPO", nullable = false, length = 2 )
+	@Enumerated( value = EnumType.STRING )
 	private TipoEstacionamientoEnum tipo;
 
 	@NotNull
@@ -129,11 +128,11 @@ public class ReservaParkingViewEntity {
 		this.fechaModificacion = fechaModificacion;
 	}
 
-	public EstadoReservaParkingEnum getEstadoReserva() {
+	public EstadoParkingEnum getEstadoReserva() {
 		return estadoReserva;
 	}
 
-	public void setEstadoReserva( EstadoReservaParkingEnum estadoReserva ) {
+	public void setEstadoReserva( EstadoParkingEnum estadoReserva ) {
 		this.estadoReserva = estadoReserva;
 	}
 }

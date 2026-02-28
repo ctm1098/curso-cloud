@@ -13,9 +13,9 @@ import es.um.atica.umufly.parking.domain.model.ReservaParking;
 @Component
 public class ParkingModelAssembler implements RepresentationModelAssembler<ReservaParking, ReservaParkingDTO> {
 
-	private final LinkService linkService;
+	private final LinkServiceParking linkService;
 
-	public ParkingModelAssembler( LinkService linkService ) {
+	public ParkingModelAssembler( LinkServiceParking linkService ) {
 		this.linkService = linkService;
 	}
 
@@ -26,8 +26,8 @@ public class ParkingModelAssembler implements RepresentationModelAssembler<Reser
 		return reservaParking;
 	}
 
-	private Link linkSelf( UUID idReserva ) {
-		return Link.of( linkService.privateApi().path( Constants.RESOURCE_PARKINGS ).pathSegment( idReserva.toString() ).build().toString() );
+	private Link linkSelf( UUID idParking ) {
+		return Link.of( linkService.privateApi().path( Constants.RESOURCE_PARKINGS ).pathSegment( idParking.toString() ).build().toString() );
 	}
 
 }

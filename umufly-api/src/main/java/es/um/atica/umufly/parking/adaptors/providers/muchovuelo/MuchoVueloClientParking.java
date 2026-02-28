@@ -13,7 +13,7 @@ import es.um.atica.umufly.parking.adaptors.providers.muchovuelo.mapper.MuchoVuel
 import es.um.atica.umufly.parking.domain.model.DocumentoIdentidad;
 
 @Component
-public class MuchoVueloClient {
+public class MuchoVueloClientParking {
 
 	private static final String API_VERSION_1 = "/v1.0";
 	private static final String API_PRIVATE = "/private";
@@ -24,11 +24,11 @@ public class MuchoVueloClient {
 
 	private final RestClient restClientMuchoVuelo;
 
-	public MuchoVueloClient( @Qualifier( "muchoVueloRestClient" ) RestClient restClientMuchoVuelo ) {
+	public MuchoVueloClientParking( @Qualifier( "muchoVueloRestClient" ) RestClient restClientMuchoVuelo ) {
 		this.restClientMuchoVuelo = restClientMuchoVuelo;
 	}
 
-	public ReservaParkingProviderDTO creaReservaParking( ReservaParkingProviderDTO reserva ) {
+	public ReservaParkingProviderDTO crearParking( ReservaParkingProviderDTO reserva ) {
 		String headerUsuario = getHeaderUsuario( reserva.getTipoDocumentoCliente(), reserva.getNumeroDocumentoCliente() );
 		try {
 			return restClientMuchoVuelo.post().uri( URI_RESERVAS_VUELO_V1 ).header( API_HEADER_USUARIO, headerUsuario ).body( reserva ).retrieve().body( ReservaParkingProviderDTO.class );
@@ -37,10 +37,10 @@ public class MuchoVueloClient {
 		}
 	}
 
-	public void cancelarReservaParking( DocumentoIdentidad documentoIdentidadTitular, UUID idReserva ) {
+	public void cancelarParking( DocumentoIdentidad documentoIdentidadTitular, UUID idParking ) {
 		String headerUsuario = getHeaderUsuario( MuchoVueloMapper.tipoDocumentoToDTO( documentoIdentidadTitular.tipo() ), documentoIdentidadTitular.identificador() );
 		try {
-			restClientMuchoVuelo.delete().uri( uriBuilder -> uriBuilder.path( URI_RESERVAS_VUELO_V1 + "/{idReserva}" ).build( idReserva ) ).header( API_HEADER_USUARIO, headerUsuario ).retrieve();
+			restClientMuchoVuelo.delete().uri( uriBuilder -> uriBuilder.path( URI_RESERVAS_VUELO_V1 + "/{idParking}" ).build( idParking ) ).header( API_HEADER_USUARIO, headerUsuario ).retrieve();
 		} catch ( org.springframework.web.client.RestClientResponseException ex ) {
 			throw new MuchoVueloClientException( "MuchoVueloAPI - Error " + ex.getStatusText() + ": " + ex.getResponseBodyAsString(), ex );
 		}

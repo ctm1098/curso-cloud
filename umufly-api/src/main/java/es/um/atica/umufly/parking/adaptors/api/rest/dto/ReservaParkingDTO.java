@@ -29,15 +29,13 @@ public class ReservaParkingDTO extends RepresentationModel<ReservaParkingDTO> {
 	private LocalDateTime fechaReserva;
 
 	@JsonFormat( pattern = Constants.PATTERN_FECHA_HORA )
-	@JsonProperty( access = JsonProperty.Access.READ_ONLY )
 	private LocalDateTime fechaInicio;
 
 	@JsonFormat( pattern = Constants.PATTERN_FECHA_HORA )
-	@JsonProperty( access = JsonProperty.Access.READ_ONLY )
 	private LocalDateTime fechaFin;
 
 	@JsonProperty( access = JsonProperty.Access.READ_ONLY )
-	private EstadoReserva estado;
+	private EstadoParking estado;
 
 	@JsonProperty( access = JsonProperty.Access.READ_ONLY )
 	private TipoEstacionamiento tipo;
@@ -85,11 +83,11 @@ public class ReservaParkingDTO extends RepresentationModel<ReservaParkingDTO> {
 		this.fechaFin = fechaFin;
 	}
 
-	public EstadoReserva getEstado() {
+	public EstadoParking getEstado() {
 		return estado;
 	}
 
-	public void setEstado( EstadoReserva estado ) {
+	public void setEstado( EstadoParking estado ) {
 		this.estado = estado;
 	}
 

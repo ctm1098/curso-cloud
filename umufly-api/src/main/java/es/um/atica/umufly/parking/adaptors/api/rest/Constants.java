@@ -9,7 +9,7 @@ public class Constants {
 	public static final String ID_PARKING = "/{idParking}";
 
 	public static final String PATTERN_FECHA_HORA = "dd/MM/yyyy HH:mm:ss";
-	public static final String ID_RESERVA = "/{idReserva}";
+	public static final String ID_RESERVA = "/{idParking}";
 
 	private Constants() {
 		throw new IllegalStateException( "Clase de constantes" );

@@ -1,5 +1,5 @@
 package es.um.atica.umufly.parking.adaptors.api.rest.dto;
 
-public enum EstadoReserva {
+public enum EstadoParking {
 	PENDIENTE, ACTIVA, CANCELADA;
 }

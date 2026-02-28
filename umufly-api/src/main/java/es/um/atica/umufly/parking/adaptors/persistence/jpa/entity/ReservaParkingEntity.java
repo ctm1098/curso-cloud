@@ -37,12 +37,29 @@ public class ReservaParkingEntity {
 	private LocalDateTime fechaModificacion;
 
 	@NotNull
+	@Column( name = "FECHA_INICIO", nullable = false )
+	private LocalDateTime fechaInicio;
+
+	@NotNull
+	@Column( name = "FECHA_FIN", nullable = false )
+	private LocalDateTime fechaFin;
+	
+	@NotNull
 	@Column( name = "ESTADO_RESERVA", length = 2, nullable = false )
 	@Enumerated( value = EnumType.STRING )
-	private EstadoReservaParkingEnum estadoReserva;
+	private EstadoParkingEnum estadoReserva;
+	
+	@NotNull
+	@Column( name = "TIPO", nullable = false, length = 2 )
+	@Enumerated( value = EnumType.STRING )
+	private TipoEstacionamientoEnum tipo;
 
 	@Column( name = "ID_RESERVA_FORMALIZADA", length = 36, nullable = true )
-	private String idReservaFormalizada;
+	private String idParkingFormalizada;
+	
+	@NotNull
+	@Column( name = "IMPORTE", nullable = false )
+	private double importe;
 
 	public String getId() {
 		return id;
@@ -84,20 +101,52 @@ public class ReservaParkingEntity {
 		this.fechaModificacion = fechaModificacion;
 	}
 
-	public EstadoReservaParkingEnum getEstadoReserva() {
+	public LocalDateTime getFechaInicio() {
+		return fechaInicio;
+	}
+
+	public void setFechaInicio( LocalDateTime fechaInicio ) {
+		this.fechaInicio = fechaInicio;
+	}
+
+	public LocalDateTime getFechaFin() {
+		return fechaFin;
+	}
+
+	public void setFechaFin( LocalDateTime fechaFin ) {
+		this.fechaFin = fechaFin;
+	}
+	
+	public EstadoParkingEnum getEstadoReserva() {
 		return estadoReserva;
 	}
 
-	public void setEstadoReserva( EstadoReservaParkingEnum estadoReserva ) {
+	public void setEstadoReserva( EstadoParkingEnum estadoReserva ) {
 		this.estadoReserva = estadoReserva;
 	}
 
-	public String getIdReservaFormalizada() {
-		return idReservaFormalizada;
+	public TipoEstacionamientoEnum getTipo() {
+		return tipo;
 	}
 
-	public void setIdReservaFormalizada( String idReservaFormalizada ) {
-		this.idReservaFormalizada = idReservaFormalizada;
+	public void setTipo( TipoEstacionamientoEnum tipo ) {
+		this.tipo = tipo;
+	}
+	
+	public String getIdParkingFormalizada() {
+		return idParkingFormalizada;
+	}
+
+	public void setIdParkingFormalizada( String idParkingFormalizada ) {
+		this.idParkingFormalizada = idParkingFormalizada;
+	}
+	
+	public double getImporte() {
+		return importe;
+	}
+
+	public void setImporte( double importe ) {
+		this.importe = importe;
 	}
 
 }

@@ -6,7 +6,7 @@ import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import es.um.atica.umufly.parking.adaptors.persistence.jpa.entity.TipoEstacionamientoEnum;
-import es.um.atica.umufly.parking.domain.model.EstadoReservaParking;
+import es.um.atica.umufly.parking.domain.model.EstadoParking;
 
 public class ReservaParkingProviderDTO {
 
@@ -25,7 +25,7 @@ public class ReservaParkingProviderDTO {
 	private LocalDateTime fechaFin;
 
 	@JsonProperty( "estado_reserva" )
-	private EstadoReservaParking estadoReserva;
+	private EstadoParking estadoReserva;
 
 	@JsonProperty( "tipo_estacionamiento" )
 	private TipoEstacionamientoEnum tipo;
@@ -89,11 +89,11 @@ public class ReservaParkingProviderDTO {
 		this.fechaInicio = fechaInicio;
 	}
 
-	public EstadoReservaParking getEstadoReserva() {
+	public EstadoParking getEstadoReserva() {
 		return estadoReserva;
 	}
 
-	public void setEstadoReserva( EstadoReservaParking estadoReserva ) {
+	public void setEstadoReserva( EstadoParking estadoReserva ) {
 		this.estadoReserva = estadoReserva;
 	}
 }

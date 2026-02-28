@@ -6,7 +6,7 @@ import es.um.atica.umufly.parking.domain.model.DocumentoIdentidad;
 import es.um.atica.umufly.parking.domain.model.TipoDocumento;
 
 @Component
-public class AuthService {
+public class AuthServiceParking {
 
 	public DocumentoIdentidad parseUserHeader( String userHeader ) {
 		if ( userHeader == null ) {

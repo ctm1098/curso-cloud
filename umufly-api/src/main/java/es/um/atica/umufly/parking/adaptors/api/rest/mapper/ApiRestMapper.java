@@ -1,7 +1,7 @@
 package es.um.atica.umufly.parking.adaptors.api.rest.mapper;
 
 import es.um.atica.umufly.parking.adaptors.api.rest.dto.DocumentoIdentidadDTO;
-import es.um.atica.umufly.parking.adaptors.api.rest.dto.EstadoReserva;
+import es.um.atica.umufly.parking.adaptors.api.rest.dto.EstadoParking;
 import es.um.atica.umufly.parking.adaptors.api.rest.dto.ReservaParkingDTO;
 import es.um.atica.umufly.parking.adaptors.api.rest.dto.TipoDocumento;
 import es.um.atica.umufly.parking.adaptors.api.rest.dto.TipoEstacionamiento;
@@ -21,7 +21,7 @@ public class ApiRestMapper {
 		reservaParkingDTO.setFechaReserva( reservaParking.getFechaReserva() );
 		reservaParkingDTO.setFechaInicio( reservaParking.getPeriodoEstacionamiento().inicio() );
 		reservaParkingDTO.setFechaFin( reservaParking.getPeriodoEstacionamiento().fin() );
-		reservaParkingDTO.setEstado( EstadoReserva.valueOf( reservaParking.getEstado().toString() ) );
+		reservaParkingDTO.setEstado( EstadoParking.valueOf( reservaParking.getEstado().toString() ) );
 		reservaParkingDTO.setTipo( TipoEstacionamiento.valueOf( reservaParking.getEstacionamiento().tipo().toString() ) );
 		reservaParkingDTO.setImporte( reservaParking.getImporte().valor() );
 		return reservaParkingDTO;

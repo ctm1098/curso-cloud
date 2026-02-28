@@ -6,10 +6,10 @@ import es.um.atica.umufly.parking.domain.model.ReservaParking;
 
 public interface ReservasParkingWriteRepository {
 
-	void persistirReserva( ReservaParking reservaParking );
+	void persistirParking( ReservaParking reservaParking );
 
-	void persistirFormalizacionReserva( UUID idReserva, UUID idReservaFormalizada );
+	void persistirFormalizacionParking( UUID idParking, UUID idParkingFormalizada );
 
-	void cancelReserva( UUID idReserva );
+	void cancelParking( UUID idParking );
 
 }

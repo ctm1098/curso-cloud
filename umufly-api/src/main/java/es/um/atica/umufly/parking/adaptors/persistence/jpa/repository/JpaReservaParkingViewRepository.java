@@ -13,6 +13,6 @@ public interface JpaReservaParkingViewRepository extends JpaRepository<ReservaPa
 
 	Page<ReservaParkingViewEntity> findByTipoDocumentoClienteAndNumeroDocumentoCliente( TipoDocumentoEnum tipoDocumento, String numeroDocumento, PageRequest pagina );
 
-	Optional<ReservaParkingViewEntity> findByIdAndTipoDocumentoClienteAndNumeroDocumentoCliente( String idReserva, TipoDocumentoEnum tipoDocumento, String numeroDocumento );
+	Optional<ReservaParkingViewEntity> findByIdAndTipoDocumentoClienteAndNumeroDocumentoCliente( String idParking, TipoDocumentoEnum tipoDocumento, String numeroDocumento );
 
 }

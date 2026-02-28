@@ -7,7 +7,7 @@ import org.springframework.web.client.RestClient;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Configuration
-public class MuchoVueloClientConfig {
+public class MuchoVueloClientConfigParking {
 
 	@Value( "${umufly.vuelos.providers.muchovuelo.base-url}" )
 	private String baseUrl;
@@ -16,7 +16,7 @@ public class MuchoVueloClientConfig {
 	private String basePath;
 
 	@Bean
-	public RestClient muchoVueloRestClient( RestClient.Builder builder ) {
+	public RestClient muchoVueloRestClientParking( RestClient.Builder builder ) {
 		return builder.baseUrl( UriComponentsBuilder.fromUriString( baseUrl ).path( basePath ).build().toUri() ).build();
 	}
 

@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Component;
 
-import es.um.atica.umufly.parking.adaptors.providers.muchovuelo.MuchoVueloClient;
+import es.um.atica.umufly.parking.adaptors.providers.muchovuelo.MuchoVueloClientParking;
 import es.um.atica.umufly.parking.adaptors.providers.muchovuelo.dto.ReservaParkingProviderDTO;
 import es.um.atica.umufly.parking.adaptors.providers.muchovuelo.mapper.MuchoVueloMapper;
 import es.um.atica.umufly.parking.application.port.ReservasParkingWritePort;
@@ -14,21 +14,21 @@ import es.um.atica.umufly.parking.domain.model.ReservaParking;
 @Component
 public class ReservasParkingAdapter implements ReservasParkingWritePort {
 
-	private final MuchoVueloClient muchoVueloClient;
+	private final MuchoVueloClientParking muchoVueloClient;
 
-	public ReservasParkingAdapter( MuchoVueloClient muchoVueloClient ) {
+	public ReservasParkingAdapter( MuchoVueloClientParking muchoVueloClient ) {
 		this.muchoVueloClient = muchoVueloClient;
 	}
 
 	@Override
-	public UUID formalizarReservaParking( ReservaParking reserva ) {
-		ReservaParkingProviderDTO reservaParkingMuchoVuelo = muchoVueloClient.creaReservaParking( MuchoVueloMapper.reservaToDTO( reserva ) );
+	public UUID formalizarParking( ReservaParking reserva ) {
+		ReservaParkingProviderDTO reservaParkingMuchoVuelo = muchoVueloClient.crearParking( MuchoVueloMapper.reservaToDTO( reserva ) );
 		return reservaParkingMuchoVuelo.getId();
 	}
 
 	@Override
-	public void cancelarReservaParking( DocumentoIdentidad documentoIdentidadTitular, UUID idReserva ) {
-		muchoVueloClient.cancelarReservaParking( documentoIdentidadTitular, idReserva );
+	public void cancelarParking( DocumentoIdentidad documentoIdentidadTitular, UUID idParking ) {
+		muchoVueloClient.cancelarParking( documentoIdentidadTitular, idParking );
 	}
 
 }

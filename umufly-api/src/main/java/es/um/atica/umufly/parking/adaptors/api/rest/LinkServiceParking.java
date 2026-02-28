@@ -6,7 +6,7 @@ import org.springframework.web.util.DefaultUriBuilderFactory;
 import org.springframework.web.util.UriBuilder;
 
 @Component
-public class LinkService {
+public class LinkServiceParking {
 
 	private UriBuilder base() {
 		return new DefaultUriBuilderFactory( BasicLinkBuilder.linkToCurrentMapping().toString() ).builder();

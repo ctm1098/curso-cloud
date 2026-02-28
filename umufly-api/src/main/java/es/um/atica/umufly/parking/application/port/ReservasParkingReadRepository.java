@@ -9,8 +9,8 @@ import es.um.atica.umufly.parking.domain.model.ReservaParking;
 
 public interface ReservasParkingReadRepository {
 
-	ReservaParking findReservaById( DocumentoIdentidad documentoIdentidad, UUID idReserva );
+	ReservaParking findParkingById( DocumentoIdentidad documentoIdentidad, UUID idParking );
 
-	Page<ReservaParking> findReservas( DocumentoIdentidad documentoIdentidad, int pagina, int tamanioPagina );
+	Page<ReservaParking> findParking( DocumentoIdentidad documentoIdentidad, int pagina, int tamanioPagina );
 
 }

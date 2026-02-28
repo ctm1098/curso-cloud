@@ -1,6 +1,6 @@
 package es.um.atica.umufly.parking.adaptors.persistence.jpa.entity;
 
-public enum EstadoReservaParkingEnum {
+public enum EstadoParkingEnum {
 
 	/**
 	 * Pendiente

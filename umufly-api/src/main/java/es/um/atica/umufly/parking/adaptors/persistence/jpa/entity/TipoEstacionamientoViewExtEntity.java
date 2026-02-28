@@ -14,12 +14,12 @@ public class TipoEstacionamientoViewExtEntity {
 
 	@Id
 	@NotNull
-	@Column( name = "TIPO", nullable = false, length = 1 )
+	@Column( name = "TIPO", nullable = false, length = 2 )
+	@Enumerated( value = EnumType.STRING )
 	private TipoEstacionamientoEnum tipo;
 
 	@NotNull
 	@Column( name = "PRECIO", nullable = false )
-	@Enumerated( value = EnumType.STRING )
 	private double precio;
 
 	public TipoEstacionamientoEnum getTipo() {

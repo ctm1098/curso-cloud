@@ -7,8 +7,8 @@ import es.um.atica.umufly.parking.domain.model.ReservaParking;
 
 public interface ReservasParkingWritePort {
 
-	UUID formalizarReservaParking( ReservaParking reserva );
+	UUID formalizarParking( ReservaParking reserva );
 
-	void cancelarReservaParking( DocumentoIdentidad documentoIdentidadTitular, UUID idReserva );
+	void cancelarParking( DocumentoIdentidad documentoIdentidadTitular, UUID idParking );
 
 }

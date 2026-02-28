@@ -14,9 +14,9 @@ public class ReservaParking {
 	private Periodo periodoEstacionamiento;
 	private Importe importe;
 	private LocalDateTime fechaReserva;
-	private EstadoReservaParking estado;
+	private EstadoParking estado;
 
-	private ReservaParking( UUID id, DocumentoIdentidad identificadorCliente, Estacionamiento estacionamiento, Periodo periodoEstacionamiento, Importe importe, LocalDateTime fechaReserva, EstadoReservaParking estado ) {
+	private ReservaParking( UUID id, DocumentoIdentidad identificadorCliente, Estacionamiento estacionamiento, Periodo periodoEstacionamiento, Importe importe, LocalDateTime fechaReserva, EstadoParking estado ) {
 		this.id = id;
 		this.identificadorCliente = identificadorCliente;
 		this.estacionamiento = estacionamiento;
@@ -26,7 +26,7 @@ public class ReservaParking {
 		this.estado = estado;
 	}
 
-	public static ReservaParking of( UUID id, DocumentoIdentidad identificadorCliente, Estacionamiento estacionamiento, Periodo periodoEstacionamiento, Importe importe, LocalDateTime fechaReserva, EstadoReservaParking estado ) {
+	public static ReservaParking of( UUID id, DocumentoIdentidad identificadorCliente, Estacionamiento estacionamiento, Periodo periodoEstacionamiento, Importe importe, LocalDateTime fechaReserva, EstadoParking estado ) {
 		if ( id == null ) {
 			throw new IllegalArgumentException( "El id de la reserva no puede ser nulo" );
 		}
@@ -70,17 +70,17 @@ public class ReservaParking {
 		return fechaReserva;
 	}
 
-	public EstadoReservaParking getEstado() {
+	public EstadoParking getEstado() {
 		return estado;
 	}
 
-	public static ReservaParking solicitarReserva( DocumentoIdentidad identificadorPasajero, Periodo periodoEstacionamiento, LocalDateTime fechaReserva ) {
+	public static ReservaParking solicitarParking( DocumentoIdentidad identificadorPasajero, Periodo periodoEstacionamiento, LocalDateTime fechaReserva ) {
 		if ( periodoEstacionamiento.inicio().isBefore( fechaReserva ) ) {
 			throw new IllegalArgumentException( "No se puede realizar una reserva para un periodo anterior a la fecha actual" );
 		}
 		Estacionamiento estacionamiento = crearEstacionamiento( periodoEstacionamiento );
 		Importe importe = new Importe( calcularImporte( identificadorPasajero, estacionamiento, periodoEstacionamiento ) );
-		return of( UUID.randomUUID(), identificadorPasajero, estacionamiento, periodoEstacionamiento, importe, fechaReserva, EstadoReservaParking.PENDIENTE );
+		return of( UUID.randomUUID(), identificadorPasajero, estacionamiento, periodoEstacionamiento, importe, fechaReserva, EstadoParking.PENDIENTE );
 	}
 
 	private static Estacionamiento crearEstacionamiento( Periodo periodoEstacionamiento ) {
@@ -110,14 +110,14 @@ public class ReservaParking {
 		return valor;
 	}
 
-	public void formalizarReserva() {
-		estado = EstadoReservaParking.ACTIVA;
+	public void formalizarParking() {
+		estado = EstadoParking.ACTIVA;
 	}
 
-	public void cancelarReserva(LocalDateTime now) {
+	public void cancelarParking(LocalDateTime now) {
 		if ( now.isAfter( getPeriodoEstacionamiento().inicio() )) {
 			throw new IllegalArgumentException( "La reserva no se puede cancelar porque ya se ha iniciado el periodo de reserva" );
 		}
-		estado = EstadoReservaParking.CANCELADA;
+		estado = EstadoParking.CANCELADA;
 	}
 }

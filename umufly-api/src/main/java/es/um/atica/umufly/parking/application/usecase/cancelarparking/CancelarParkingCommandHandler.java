@@ -1,4 +1,4 @@
-package es.um.atica.umufly.parking.application.usecase.cancelarreservas;
+package es.um.atica.umufly.parking.application.usecase.cancelarparking;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
@@ -12,31 +12,31 @@ import es.um.atica.umufly.parking.application.port.ReservasParkingWriteRepositor
 import es.um.atica.umufly.parking.domain.model.ReservaParking;
 
 @Component
-public class CancelarReservaCommandHandler implements SyncCommandHandler<ReservaParking, CancelarReservaCommand> {
+public class CancelarParkingCommandHandler implements SyncCommandHandler<ReservaParking, CancelarParkingCommand> {
 
 	private final ReservasParkingReadRepository reservasParkingReadRepository;
 	private final ReservasParkingWriteRepository reservasParkingWriteRepository;
-	private final ReservasParkingWritePort formalizacionReservasParkingPort;
+	private final ReservasParkingWritePort reservasParkingWritePort;
 	private final Clock clock;
 
-	public CancelarReservaCommandHandler( ReservasParkingReadRepository reservasparkingRepository, ReservasParkingWriteRepository reservasParkingWriteRepository, ReservasParkingWritePort formalizacionReservasParkingPort, Clock clock ) {
+	public CancelarParkingCommandHandler( ReservasParkingReadRepository reservasparkingRepository, ReservasParkingWriteRepository reservasParkingWriteRepository, ReservasParkingWritePort reservasParkingWritePort, Clock clock ) {
 		this.reservasParkingReadRepository = reservasparkingRepository;
 		this.reservasParkingWriteRepository = reservasParkingWriteRepository;
-		this.formalizacionReservasParkingPort = formalizacionReservasParkingPort;
+		this.reservasParkingWritePort = reservasParkingWritePort;
 		this.clock = clock;
 	}
 
 	@Override
-	public ReservaParking handle( CancelarReservaCommand command ) throws Exception {
+	public ReservaParking handle( CancelarParkingCommand command ) throws Exception {
 		// 1. Recuperamos la reserva
-		ReservaParking reserva = reservasParkingReadRepository.findReservaById( command.getDocumentoIdentidadTitular(), command.getIdReserva() );
+		ReservaParking reserva = reservasParkingReadRepository.findParkingById( command.getDocumentoIdentidadTitular(), command.getIdParking() );
 
 		// 2. Cancelamos la reserva en el fronOffice
-		reserva.cancelarReserva( LocalDateTime.now( clock ) );
-		reservasParkingWriteRepository.cancelReserva( reserva.getId() );
+		reserva.cancelarParking( LocalDateTime.now( clock ) );
+		reservasParkingWriteRepository.cancelParking( reserva.getId() );
 
 		// 3. Cancelamos la reserva llamando al backoffice para que se haga eco de la cancelacion
-		formalizacionReservasParkingPort.cancelarReservaParking( command.getDocumentoIdentidadTitular(), command.getIdReserva() );
+		reservasParkingWritePort.cancelarParking( command.getDocumentoIdentidadTitular(), command.getIdParking() );
 
 		return reserva;
 	}
