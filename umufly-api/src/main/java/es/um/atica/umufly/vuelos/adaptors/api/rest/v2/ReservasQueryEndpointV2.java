@@ -18,8 +18,12 @@ import es.um.atica.umufly.vuelos.application.usecase.listarreservas.ListaReserva
 import es.um.atica.umufly.vuelos.application.usecase.obtenerreservas.ObtenerReservaQuery;
 import es.um.atica.umufly.vuelos.application.usecase.obtenerreservas.ObtenerReservaQueryHandler;
 import es.um.atica.umufly.vuelos.domain.model.ReservaVuelo;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
+@Tag( name = "Reservas vuelos v2", description = "Operaciones sobre reservas de vuelos version 2" )
 public class ReservasQueryEndpointV2 {
 
 	private final ListaReservasQueryHandler listaReservasQueryHandler;
@@ -37,12 +41,18 @@ public class ReservasQueryEndpointV2 {
 		this.authService = authService;
 	}
 
+	@Operation( summary = "Obtener reservas vuelos", description = "Devuelve la lista de reserva vuelos paginada" )
+	@ApiResponse( responseCode = "200", description = "OK" )
+	@ApiResponse( responseCode = "404", description = "No hay reservas" )
 	@GetMapping( Constants.PRIVATE_PREFIX + Constants.API_VERSION_2 + Constants.RESOURCE_RESERVAS_VUELO )
 	public CollectionModel<ReservaVueloDTO> getReservas( @RequestHeader( name = "UMU-Usuario", required = true ) String usuario, @RequestParam( name = "page", defaultValue = "0" ) int page, @RequestParam( name = "size", defaultValue = "25" ) int size )
 			throws Exception {
 		return pagedResourcesAssembler.toModel( listaReservasQueryHandler.handle( ListaReservasQuery.of( authService.parseUserHeader( usuario ), page, size ) ), reservasModelAssembler );
 	}
 
+	@Operation( summary = "Obtener reserva de vuelo", description = "Devuelve una reserva" )
+	@ApiResponse( responseCode = "200", description = "OK" )
+	@ApiResponse( responseCode = "404", description = "No hay reservas" )
 	@GetMapping( Constants.PRIVATE_PREFIX + Constants.API_VERSION_2 + Constants.RESOURCE_RESERVAS_VUELO + Constants.ID_RESERVA )
 	public ReservaVueloDTO getReserva( @RequestHeader( name = "UMU-Usuario", required = true ) String usuario, @PathVariable( "idReserva" ) UUID idReserva ) throws Exception {
 		return reservasModelAssembler.toModel( obtenerReservaQueryHandler.handle( ObtenerReservaQuery.of( authService.parseUserHeader( usuario ), idReserva ) ) );

@@ -4,6 +4,8 @@ import java.util.UUID;
 
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -13,14 +15,20 @@ import org.springframework.web.bind.annotation.RestController;
 import es.um.atica.umufly.vuelos.adaptors.api.rest.AuthService;
 import es.um.atica.umufly.vuelos.adaptors.api.rest.Constants;
 import es.um.atica.umufly.vuelos.adaptors.api.rest.v2.dto.VueloDTO;
+import es.um.atica.umufly.vuelos.adaptors.persistence.jpa.entity.UsuarioEntity;
 import es.um.atica.umufly.vuelos.application.dto.VueloAmpliadoDTO;
 import es.um.atica.umufly.vuelos.application.usecase.listarvuelos.ListaVuelosQuery;
 import es.um.atica.umufly.vuelos.application.usecase.listarvuelos.ListaVuelosQueryHandler;
 import es.um.atica.umufly.vuelos.application.usecase.obtenervuelos.ObtenerVueloQuery;
 import es.um.atica.umufly.vuelos.application.usecase.obtenervuelos.ObtenerVueloQueryHandler;
 import es.um.atica.umufly.vuelos.domain.model.DocumentoIdentidad;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
+@Tag( name = "Vuelosv2", description = "Operaciones sobre vuelos version2" )
 public class VuelosQueryEndpointV2 {
 
 	private final ObtenerVueloQueryHandler obtenerVueloQueryHandler;
@@ -38,15 +46,36 @@ public class VuelosQueryEndpointV2 {
 		this.authService = authService;
 	}
 
+	// @GetMapping( Constants.PRIVATE_PREFIX + Constants.API_VERSION_2 + Constants.RESOURCE_VUELOS )
+	// @PreAuthorize( "hasRole('USER')" )
+	// public CollectionModel<VueloDTO> getVuelos( @RequestHeader( name = "UMU-Usuario", required = true ) String usuario,
+	// @RequestParam( name = "page", defaultValue = "0" ) int page, @RequestParam( name = "size", defaultValue = "25" ) int
+	// size )
+	// throws Exception {
+	// DocumentoIdentidad documento = authService.parseUserHeader( usuario );
+	// return pagedResourcesAssembler.toModel( listaVuelosQueryHandler.handle( ListaVuelosQuery.of( documento, page, size )
+	// ), vuelosModelAssemblerV2 );
+	// }
+
+	@Operation( summary = "Obtener vuelos", description = "Devuelve la lista de vuelos paginada" )
+	@ApiResponse( responseCode = "200", description = "OK" )
+	@ApiResponse( responseCode = "404", description = "No hay vuelos" )
 	@GetMapping( Constants.PRIVATE_PREFIX + Constants.API_VERSION_2 + Constants.RESOURCE_VUELOS )
-	public CollectionModel<VueloDTO> getVuelos( @RequestHeader( name = "UMU-Usuario", required = true ) String usuario, @RequestParam( name = "page", defaultValue = "0" ) int page, @RequestParam( name = "size", defaultValue = "25" ) int size )
-			throws Exception {
-		DocumentoIdentidad documento = authService.parseUserHeader( usuario );
+	@PreAuthorize( "hasRole('ADMIN')" )
+	public CollectionModel<VueloDTO> getVuelos( @AuthenticationPrincipal UsuarioEntity usuario, @Parameter( description = "Pagina inicio" ) @RequestParam( name = "page", defaultValue = "0" ) int page,
+			@Parameter( description = "Longitud de la pagina" ) @RequestParam( name = "size", defaultValue = "25" ) int size )
+					throws Exception {
+		DocumentoIdentidad documento = null;
 		return pagedResourcesAssembler.toModel( listaVuelosQueryHandler.handle( ListaVuelosQuery.of( documento, page, size ) ), vuelosModelAssemblerV2 );
 	}
 
+	@Operation( summary = "Obtener un vuelo", description = "Obtiene un vuelo a partir de su id", tags = {
+			"Vuelos"
+	} )
+	@ApiResponse( responseCode = "200", description = "OK" )
+	@ApiResponse( responseCode = "404", description = "No hay vuelos" )
 	@GetMapping( Constants.PRIVATE_PREFIX + Constants.API_VERSION_2 + Constants.RESOURCE_VUELOS + Constants.ID_VUELOS )
-	public VueloDTO getVuelo( @RequestHeader( name = "UMU-Usuario", required = true ) String usuario, @PathVariable( "idVuelo" ) UUID idVuelo ) throws Exception {
+	public VueloDTO getVuelo( @Parameter( description = "El id del vuelo" ) @RequestHeader( name = "UMU-Usuario", required = true ) String usuario, @PathVariable( "idVuelo" ) UUID idVuelo ) throws Exception {
 		return vuelosModelAssemblerV2.toModel( obtenerVueloQueryHandler.handle( ObtenerVueloQuery.of( authService.parseUserHeader( usuario ), idVuelo ) ) );
 	}
 

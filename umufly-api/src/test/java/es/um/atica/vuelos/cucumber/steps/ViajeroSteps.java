@@ -1,5 +1,7 @@
 package es.um.atica.vuelos.cucumber.steps;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
