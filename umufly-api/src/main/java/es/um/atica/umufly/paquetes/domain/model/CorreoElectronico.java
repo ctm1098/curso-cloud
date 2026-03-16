@@ -1,4 +1,4 @@
-package es.um.atica.umufly.vuelos.domain.model;
+package es.um.atica.umufly.paquetes.domain.model;
 
 import java.util.regex.Pattern;
 
@@ -11,8 +11,9 @@ public record CorreoElectronico( String valor ) {
 		if ( valor == null || valor.isBlank() ) {
 			throw new IllegalArgumentException( "El correo electrónico no puede ser nulo" );
 		}
-		if ( PATTERN.matcher( valor ).matches() ) {
+		if ( !PATTERN.matcher( valor ).matches() ) {
 			throw new IllegalArgumentException( "El correo electrónico no tiene un formato válido" );
 		}
 	}
 }
+

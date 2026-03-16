@@ -1,11 +1,12 @@
-package es.um.atica.umufly.vuelos.domain.model;
+package es.um.atica.umufly.paquetes.domain.model;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+
 public class Vuelo {
 
-	private UUID id;
+    private UUID id;
 	private Itinerario itinerario;
 	private TipoVuelo tipo;
 	private EstadoVuelo estado;
@@ -61,4 +62,10 @@ public class Vuelo {
 	public boolean isIniciado( LocalDateTime fechaHoraActual ) {
 		return itinerario.salida().equals( fechaHoraActual ) || itinerario.salida().isBefore( fechaHoraActual );
 	}
+
+    public boolean isDisponible() {
+		return estado == EstadoVuelo.PENDIENTE || estado == EstadoVuelo.RETRASADO;
+	}
+
+
 }
